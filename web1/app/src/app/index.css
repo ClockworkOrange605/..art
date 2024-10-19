@@ -1,0 +1,40 @@
+html,
+body {
+  width: fit-content;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+header {
+  width: calc(100dvw - 20px);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 15px;
+  border: 1px solid #93c572;
+  background: #93c572;
+  margin: 10px;
+  padding: 10px;
+
+  button {
+    border: 1px solid floralwhite;
+    border-radius: 10px;
+    padding: 10px;
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+.Page {
+  width: 100dvw;
+  height: 100dvh;
+
+  .Content {
+    height: 2000px;
+  }
+}
