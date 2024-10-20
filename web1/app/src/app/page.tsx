@@ -1,6 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+
+import { useTokensList } from '@/api/Tokens'
 
 import './index.css'
 
@@ -31,6 +33,10 @@ export default function Home() {
   return (
     <>
       <header>
+        <a className='Logo' href='/'>
+          ..
+        </a>
+
         <button onClick={scrollToFirstPage}>First</button>
         <button onClick={scrollToSecondPage}>Second</button>
         <button onClick={scrollToThirdPage}>Third</button>
@@ -50,12 +56,56 @@ export default function Home() {
           <div className='Content'></div>
         </div>
 
-        <div ref={pageRef4} className='Page bg-[#]'>
-          <div className='Content'></div>
+        <div ref={pageRef4} className='Page bg-[#999]'>
+          <div className='Content'>
+            <TokensList />
+          </div>
         </div>
       </main>
 
       <footer></footer>
     </>
+  )
+}
+
+const TokensList = () => {
+  const { data, error, isLoading } = useTokensList()
+
+  useEffect(() => {
+    console.log('length', data?.data.length)
+
+    console.log(
+      data?.data.map((token: any) =>
+        token.events.map((event: any) => event.event)
+      )
+    )
+  }, [data])
+
+  return (
+    <div className='TokenListContainer'>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error</div>}
+
+      {/* TODO: typization */}
+      {!isLoading && !error && (
+        <>
+          {data?.data.map((item: any) => (
+            <div className='TokenItem' key={item.id}>
+              <div>
+                {item.metadata.name}
+                <a
+                  href={item.metadata.external_url}
+                  target='_blank'
+                  rel='no-follow'
+                >
+                  🔗
+                </a>
+              </div>
+              <img src={item.metadata.image} alt={item.metadata.name} />
+            </div>
+          ))}
+        </>
+      )}
+    </div>
   )
 }
