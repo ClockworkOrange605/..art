@@ -1,0 +1,27 @@
+.TokenListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+
+  padding-bottom: 115px;
+
+  .TokenItem {
+    .Header {
+      display: flex;
+      justify-content: flex-start;
+
+      .Title {
+        max-width: 375px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 5px;
+      }
+    }
+
+    img {
+      width: 500px;
+    }
+  }
+}

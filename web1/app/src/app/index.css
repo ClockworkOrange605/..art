@@ -40,10 +40,19 @@ main {
 .Page {
   width: 100dvw;
   height: 100dvh;
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
 
   .Content {
-    height: fit-content;
-    overflow: auto;
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-top: 76.43px;
+
+    & > * {
+      height: fit-content;
+      overflow: auto;
+    }
   }
 }

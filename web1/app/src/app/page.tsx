@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
-import { useTokensList } from '@/api/Tokens'
+import { TokensList } from '@/components/Market/Tokens/List'
 
 import './index.css'
 
@@ -13,6 +13,7 @@ export default function Home() {
   const pageRef2 = useRef<HTMLDivElement>(null)
   const pageRef3 = useRef<HTMLDivElement>(null)
   const pageRef4 = useRef<HTMLDivElement>(null)
+  const pageRef5 = useRef<HTMLDivElement>(null)
 
   const scrollToFirstPage: React.MouseEventHandler<HTMLButtonElement> = () => {
     pageRef1.current?.scrollIntoView({ behavior: 'smooth' })
@@ -30,6 +31,10 @@ export default function Home() {
     pageRef4.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const scrollToFifthPage: React.MouseEventHandler<HTMLButtonElement> = () => {
+    pageRef5.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <>
       <header>
@@ -41,6 +46,7 @@ export default function Home() {
         <button onClick={scrollToSecondPage}>Second</button>
         <button onClick={scrollToThirdPage}>Third</button>
         <button onClick={scrollToFourthPage}>Fourth</button>
+        <button onClick={scrollToFifthPage}>Fifth</button>
       </header>
 
       <main ref={layoutRef}>
@@ -61,51 +67,13 @@ export default function Home() {
             <TokensList />
           </div>
         </div>
+
+        <div ref={pageRef5} className='Page bg-[#2cb]'>
+          <div className='Content'></div>
+        </div>
       </main>
 
       <footer></footer>
     </>
-  )
-}
-
-const TokensList = () => {
-  const { data, error, isLoading } = useTokensList()
-
-  useEffect(() => {
-    console.log('length', data?.data.length)
-
-    console.log(
-      data?.data.map((token: any) =>
-        token.events.map((event: any) => event.event)
-      )
-    )
-  }, [data])
-
-  return (
-    <div className='TokenListContainer'>
-      {isLoading && <div>Loading...</div>}
-      {error && <div>Error</div>}
-
-      {/* TODO: typization */}
-      {!isLoading && !error && (
-        <>
-          {data?.data.map((item: any) => (
-            <div className='TokenItem' key={item.id}>
-              <div>
-                {item.metadata.name}
-                <a
-                  href={item.metadata.external_url}
-                  target='_blank'
-                  rel='no-follow'
-                >
-                  🔗
-                </a>
-              </div>
-              <img src={item.metadata.image} alt={item.metadata.name} />
-            </div>
-          ))}
-        </>
-      )}
-    </div>
   )
 }
