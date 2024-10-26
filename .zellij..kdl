@@ -1,0 +1,81 @@
+// alias zs='PROJECT_ROOT=/srv/iama /opt/zellij --layout=/srv/iama/zellij.kdl'
+// alias za='/opt/zellij attach'
+
+// env {
+//  PROJECT_ROOT "/srv/layout"
+// }
+
+layout {
+  cwd "${PROJECT_ROOT}"
+  // the default zellij tab-bar and status bar plugins
+  default_tab_template {
+    pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+    }
+    children
+    // Hotkeys
+    // pane size=2 borderless=true {
+    //   plugin location="zellij:status-bar"
+    // }
+  }
+
+  pane_template name="docker_compose" command="docker-compose"
+
+  tab name="main" split_direction="vertical" focus=true {
+    pane focus=true
+    pane split_direction="horizontal" {
+      pane command="htop"
+      pane command="git" start_suspended=true{
+        args "submodule" "update" "--remote"
+      }
+    }
+  }
+
+  tab name="[watcher]" {
+    docker_compose {
+      args "logs" "-f" "watcher"
+    }
+    pane split_direction="vertical" {
+      docker_compose {
+        args "exec" "watcher" "bash"
+      }
+      pane cwd="${PROJECT_ROOT}/watcher" focus=true
+    }
+  }
+
+  tab name="[api]" {
+    docker_compose {
+      args "logs" "-f" "api"
+    }
+    pane split_direction="vertical" {
+      docker_compose {
+        args "exec" "api" "bash"
+      }
+      pane cwd="${PROJECT_ROOT}/api" focus=true
+    }
+  }
+
+  tab name="[web]app1" {
+    docker_compose {
+      args "logs" "-f" "web1"
+    }
+    pane split_direction="vertical" {
+      docker_compose {
+        args "exec" "web1" "bash"
+      }
+      pane cwd="${PROJECT_ROOT}/web1" focus=true
+    }
+  }
+
+  tab name="[web]app2" {
+    docker_compose {
+      args "logs" "-f" "web2"
+    }
+    pane split_direction="vertical" {
+      docker_compose {
+        args "exec" "web2" "bash"
+      }
+      pane cwd="${PROJECT_ROOT}/web2" focus=true
+    }
+  }
+}

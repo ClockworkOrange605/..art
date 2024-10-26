@@ -1,0 +1,60 @@
+services:
+  api:
+    image: node:20
+    command: bash -c "npm install && npm run start:dev"
+    working_dir: /app
+    volumes:
+      - ./api/:/app
+    ports:
+      - ${PORT_API}:4000
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      MONGO_URI: mongodb://${DB_USERNAME}:${DB_PASSWORD}@mongo:27017
+      MONGO_DB_NAME: ${DB_NAME}
+
+  watcher:
+    image: oven/bun:1.1
+    command: bash -c " bun --watch run main.ts"
+    working_dir: /app
+    volumes:
+      - ./watcher/:/app
+    environment:
+      NODE_ENV: ${NODE_ENV}
+
+      MONGO_URI: mongodb://${DB_USERNAME}:${DB_PASSWORD}@mongo:27017
+      MONGO_DB_NAME: ${DB_NAME}
+
+      EVM_RPC: https://mainnet.infura.io/v3/${INFURA_IPFS_ID}
+
+  web1:
+    image: node:20
+    command: bash -c "npm install && npm run dev"
+    working_dir: /app
+    volumes:
+      - ./web1/app/:/app
+    ports:
+      - ${PORT_WEB1_APP}:3000
+    environment:
+      NODE_ENV: ${NODE_ENV}
+
+  web2:
+    image: node:20
+    command: bash -c "npm install && npm run dev -- --host 0.0.0.0 --port 3999"
+    working_dir: /app
+    volumes:
+      - ./web2/app/:/app
+    ports:
+      - ${PORT_WEB2_APP}:3999
+    environment:
+      NODE_ENV: ${NODE_ENV}
+
+  mongo:
+    image: mongo:7.0
+    volumes:
+      - ./storage/dbs/mongo:/data/db/
+    ports:
+      - ${PORT_DB}:27017
+    environment:
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
