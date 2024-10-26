@@ -1,8 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { TokensList } from '@/components/Market/Tokens/List'
+import { TokenItem } from '@/components/Market/Tokens/Item'
+
+import { ObjectID } from '@/shared/Types'
 
 import './index.css'
 
@@ -15,24 +18,34 @@ export default function Home() {
   const pageRef4 = useRef<HTMLDivElement>(null)
   const pageRef5 = useRef<HTMLDivElement>(null)
 
-  const scrollToFirstPage: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const onResize = () =>
+    pageRef3?.current?.scrollIntoView({ behavior: 'instant' })
+
+  useLayoutEffect(() => {
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const scrollToFirstPage: React.MouseEventHandler<HTMLButtonElement> = () =>
     pageRef1.current?.scrollIntoView({ behavior: 'smooth' })
-  }
 
-  const scrollToSecondPage: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const scrollToSecondPage: React.MouseEventHandler<HTMLButtonElement> = () =>
     pageRef2.current?.scrollIntoView({ behavior: 'smooth' })
-  }
 
-  const scrollToThirdPage: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const scrollToThirdPage: React.MouseEventHandler<HTMLButtonElement> = () =>
     pageRef3.current?.scrollIntoView({ behavior: 'smooth' })
-  }
 
-  const scrollToFourthPage: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const scrollToFourthPage: React.MouseEventHandler<HTMLButtonElement> = () =>
     pageRef4.current?.scrollIntoView({ behavior: 'smooth' })
-  }
 
-  const scrollToFifthPage: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const scrollToFifthPage = () =>
     pageRef5.current?.scrollIntoView({ behavior: 'smooth' })
+
+  // TODO: use global state manager
+  const [tokenId, setTokenId] = useState<ObjectID>()
+  const openToken = (tokenId: ObjectID) => {
+    setTokenId(tokenId)
+    scrollToFifthPage()
   }
 
   return (
@@ -64,12 +77,14 @@ export default function Home() {
 
         <div ref={pageRef4} className='Page bg-[#999]'>
           <div className='Content'>
-            <TokensList />
+            <TokensList openToken={openToken} />
           </div>
         </div>
 
         <div ref={pageRef5} className='Page bg-[#2cb]'>
-          <div className='Content'></div>
+          <div className='Content'>
+            <TokenItem tokenId={tokenId} />
+          </div>
         </div>
       </main>
 

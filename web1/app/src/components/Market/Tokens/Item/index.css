@@ -1,0 +1,27 @@
+.TokenItemContainer {
+  width: 100%;
+  padding: 10px;
+
+  .TokenItemCard {
+    padding: 10px;
+
+    video {
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .Token {
+      display: flex;
+      gap: 10px;
+
+      .TokenLinks {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .TokenImage {
+        width: 500px;
+      }
+    }
+  }
+}

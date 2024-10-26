@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 
 import { Token } from '@/shared/Token'
+import { ObjectID } from '@/shared/Types'
 
 // TODO: move to .env
 const baseUrl = 'http://localhost:22000'
@@ -10,4 +11,7 @@ const fetcher = (url: string) =>
 
 const useTokensList = () => useSWR<{ data: Token[] }>('token', fetcher)
 
-export { useTokensList }
+const useToken = (id: ObjectID | undefined) =>
+  useSWR<{ data: Token }>(id ? `token/${id}` : null, fetcher)
+
+export { useToken, useTokensList }

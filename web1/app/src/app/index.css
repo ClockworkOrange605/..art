@@ -17,6 +17,7 @@ header {
   background: #93c572;
   margin: 10px;
   padding: 10px;
+  z-index: 15;
 
   .Logo {
     font-size: 20px;
