@@ -1,0 +1,9 @@
+.DraftsContainer {
+  width: 100;
+  padding: 10px;
+
+  .Actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

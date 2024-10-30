@@ -1,0 +1,13 @@
+.EditorContainer {
+  margin: 10px;
+
+  .EditorWrapper {
+    margin: 10px;
+
+    .EditorInstance {
+      width: 80dvh;
+      height: 80dvh;
+      /* height: calc(100dvh - 100px); */
+    }
+  }
+}

@@ -5,11 +5,13 @@ services:
     working_dir: /app
     volumes:
       - ./api/:/app
+      - ./shared/:/app/src/shared
     ports:
       - ${PORT_API}:4000
     environment:
       NODE_ENV: ${NODE_ENV}
       MONGO_URI: mongodb://${DB_USERNAME}:${DB_PASSWORD}@mongo:27017
+      DATABASE_URL: mongodb://${DB_USERNAME}:${DB_PASSWORD}@mongo:27017
       MONGO_DB_NAME: ${DB_NAME}
 
   watcher:

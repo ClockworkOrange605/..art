@@ -1,4 +1,4 @@
-import { PressEvent } from '@react-types/shared'
+// import { PressEvent } from '@react-types/shared'
 
 import { Image } from '@nextui-org/image'
 import { Card, CardFooter } from '@nextui-org/card'
@@ -16,10 +16,10 @@ interface ComponentProps {
 const TokensList = ({ openToken }: ComponentProps) => {
   const { data, error, isLoading } = useTokensList()
 
-  const onPressTokenCardEventHandler = (event: PressEvent) => {
-    console.log(event.target)
-    // openToken()
-  }
+  // const onPressTokenCardEventHandler = (event: PressEvent) => {
+  //   console.log(event.target)
+  //   // openToken()
+  // }
 
   return (
     <div className='TokenListContainer'>
@@ -46,13 +46,13 @@ const TokensList = ({ openToken }: ComponentProps) => {
               />
               <CardFooter className='Footer'>
                 <div className='Title'>{item.metadata.name}</div>
-                <a
+                {/* <a
                   href={item.metadata.external_url}
                   target='_blank'
                   rel='no-follow'
                 >
                   🔗
-                </a>
+                </a> */}
               </CardFooter>
             </Card>
           ))}

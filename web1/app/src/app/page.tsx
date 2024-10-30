@@ -2,12 +2,14 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
+import { Editor } from '@/components/Artworks/Editor'
+import { Drafts } from '@/components/Artworks/Drafts'
 import { TokensList } from '@/components/Market/Tokens/List'
 import { TokenItem } from '@/components/Market/Tokens/Item'
 
 import { ObjectID } from '@/shared/Types'
 
-import './index.css'
+import './page.css'
 
 export default function Home() {
   const layoutRef = useRef<HTMLElement>(null)
@@ -22,20 +24,21 @@ export default function Home() {
     pageRef3?.current?.scrollIntoView({ behavior: 'instant' })
 
   useLayoutEffect(() => {
+    onResize()
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const scrollToFirstPage: React.MouseEventHandler<HTMLButtonElement> = () =>
+  const scrollToFirstPage = () =>
     pageRef1.current?.scrollIntoView({ behavior: 'smooth' })
 
-  const scrollToSecondPage: React.MouseEventHandler<HTMLButtonElement> = () =>
+  const scrollToSecondPage = () =>
     pageRef2.current?.scrollIntoView({ behavior: 'smooth' })
 
-  const scrollToThirdPage: React.MouseEventHandler<HTMLButtonElement> = () =>
+  const scrollToThirdPage = () =>
     pageRef3.current?.scrollIntoView({ behavior: 'smooth' })
 
-  const scrollToFourthPage: React.MouseEventHandler<HTMLButtonElement> = () =>
+  const scrollToFourthPage = () =>
     pageRef4.current?.scrollIntoView({ behavior: 'smooth' })
 
   const scrollToFifthPage = () =>
@@ -64,11 +67,15 @@ export default function Home() {
 
       <main ref={layoutRef}>
         <div ref={pageRef1} className='Page bg-orange-500'>
-          <div className='Content'></div>
+          <div className='Content'>
+            <Editor />
+          </div>
         </div>
 
         <div ref={pageRef2} className='Page bg-[#000]'>
-          <div className='Content'></div>
+          <div className='Content'>
+            <Drafts scrollToForm={scrollToFirstPage} />
+          </div>
         </div>
 
         <div ref={pageRef3} className='Page bg-[#2cb]'>
