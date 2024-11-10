@@ -67,9 +67,7 @@ export default function Home() {
 
       <main ref={layoutRef}>
         <div ref={pageRef1} className='Page bg-orange-500'>
-          <div className='Content'>
-            <Editor />
-          </div>
+          <div className='Content'>{/* <Editor /> */}</div>
         </div>
 
         <div ref={pageRef2} className='Page bg-[#000]'>

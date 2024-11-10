@@ -55,27 +55,27 @@ layout {
     }
   }
 
-  tab name="[web]app1" {
+  tab name="[web]ide" {
     docker_compose {
-      args "logs" "-f" "web1"
+      args "logs" "-f" "ide"
     }
     pane split_direction="vertical" {
       docker_compose {
-        args "exec" "web1" "bash"
+        args "exec" "ide" "bash"
       }
-      pane cwd="${PROJECT_ROOT}/web1" focus=true
+      pane cwd="${PROJECT_ROOT}/web/ide" focus=true
     }
   }
 
-  tab name="[web]app2" {
+  tab name="[web]market" {
     docker_compose {
-      args "logs" "-f" "web2"
+      args "logs" "-f" "market"
     }
     pane split_direction="vertical" {
       docker_compose {
-        args "exec" "web2" "bash"
+        args "exec" "market" "bash"
       }
-      pane cwd="${PROJECT_ROOT}/web2" focus=true
+      pane cwd="${PROJECT_ROOT}/market" focus=true
     }
   }
 }
